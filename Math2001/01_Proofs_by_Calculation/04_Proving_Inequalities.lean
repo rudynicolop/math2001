@@ -20,14 +20,18 @@ example {x y : ℤ} (hx : x + 3 ≤ 2) (hy : y + 2 * x ≥ 3) : y > 3 :=
 -- Exercise: replace the words "sorry" with the correct Lean justification.
 example {r s : ℚ} (h1 : s + 3 ≥ r) (h2 : s + r ≤ 3) : r ≤ 3 :=
   calc
-    r = (s + r + r - s) / 2 := by sorry
-    _ ≤ (3 + (s + 3) - s) / 2 := by sorry
-    _ = 3 := by sorry
+    r = (s + r + r - s) / 2 := by ring
+    _ ≤ (3 + (s + 3) - s) / 2 := by rel [h1, h2]
+    _ = 3 := by ring
 
 -- Example 1.4.3
 -- Exercise: type out the whole proof printed in the text as a Lean proof.
 example {x y : ℝ} (h1 : y ≤ x + 5) (h2 : x ≤ -2) : x + y < 2 :=
-  sorry
+  calc
+    x + y ≤ x + (x + 5) := by rel [h1]
+    _ ≤ -2 + (-2 + 5) := by rel [h2]
+    _ = 1 := by ring
+    _ < 2 := by numbers
 
 -- Example 1.4.4
 -- Exercise: replace the words "sorry" with the correct Lean justification.
@@ -36,12 +40,12 @@ example {u v x y A B : ℝ} (h1 : 0 < A) (h2 : A ≤ 1) (h3 : 1 ≤ B) (h4 : x �
     u * y + v * x + u * v < 3 * A * B :=
   calc
     u * y + v * x + u * v
-      ≤ u * B + v * B + u * v := by sorry
-    _ ≤ A * B + A * B + A * v := by sorry
-    _ ≤ A * B + A * B + 1 * v := by sorry
-    _ ≤ A * B + A * B + B * v := by sorry
-    _ < A * B + A * B + B * A := by sorry
-    _ = 3 * A * B := by sorry
+      ≤ u * B + v * B + u * v := by rel [h4, h5]
+    _ ≤ A * B + A * B + A * v := by rel [h8, h9]
+    _ ≤ A * B + A * B + 1 * v := by rel [h2]
+    _ ≤ A * B + A * B + B * v := by rel [h3]
+    _ < A * B + A * B + B * A := by rel [h9]
+    _ = 3 * A * B := by ring
 
 -- Example 1.4.5
 -- Exercise: replace the words "sorry" with the correct Lean justification.
@@ -70,10 +74,10 @@ example {m n : ℤ} (h : m ^ 2 + n ≤ 2) : n ≤ 2 :=
 -- Exercise: replace the words "sorry" with the correct Lean justification.
 example {x y : ℝ} (h : x ^ 2 + y ^ 2 ≤ 1) : (x + y) ^ 2 < 3 :=
   calc
-    (x + y) ^ 2 ≤ (x + y) ^ 2 + (x - y) ^ 2 := by sorry
-    _ = 2 * (x ^ 2 + y ^ 2) := by sorry
-    _ ≤ 2 * 1 := by sorry
-    _ < 3 := by sorry
+    (x + y) ^ 2 ≤ (x + y) ^ 2 + (x - y) ^ 2 := by extra
+    _ = 2 * (x ^ 2 + y ^ 2) := by ring
+    _ ≤ 2 * 1 := by rel [h]
+    _ < 3 := by numbers
 
 -- Example 1.4.9
 -- Exercise: replace the words "sorry" with the correct Lean justification.
